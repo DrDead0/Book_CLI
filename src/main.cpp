@@ -8,6 +8,10 @@ int main(){
     while(true){
         cout <<"book>";
         getline(cin,input);
+        
+        if (input == "exit" || input == "quite"){
+            break;
+        }
     }
 
     return 0
