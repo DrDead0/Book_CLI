@@ -33,7 +33,7 @@ int main() {
         if (!args.empty()) {
             cout << "Parsed " << args.size() << " arguments:\n";
             for (const string& arg : args) {
-                std::cout << " -> " << arg << "\n";
+                cout << " -> " << arg << "\n";
             }
         }
     }
