@@ -3,7 +3,7 @@
 #include <filesystem>
 
 using namespace std;
-namespace fs = std::filesystem;
+namespace fs = filesystem;
 
 void WorkspaceCommand::execute(const vector<string>& args) {
     if (args.size() < 2) {
