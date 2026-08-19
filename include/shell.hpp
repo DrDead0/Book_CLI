@@ -8,6 +8,6 @@ class Shell {
         void run(); 
 
     private:
-        std::vector<string> parseInput(const string& input);
+        vector<string> parseInput(const string& input);
         void executeCommand(const vector<string>& args);
 };
