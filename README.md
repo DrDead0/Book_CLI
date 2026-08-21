@@ -1,2 +1,2 @@
 # CLI Shell
-A c++ Based powerfull CLI shell
+A c++ Based Powerful CLI shell
