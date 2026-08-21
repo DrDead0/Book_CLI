@@ -1,7 +1,8 @@
-#include "shell.hpp"
-#include "workspace.hpp"
+#include "../../include/shell.hpp"
+#include "../../include/workspace.hpp"
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 

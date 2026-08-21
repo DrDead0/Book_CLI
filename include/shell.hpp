@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+using namespace std;
 class Shell {
 public:
     void run(); 
