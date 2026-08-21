@@ -4,6 +4,7 @@ echo   Compiling BOOK CLI...
 echo ===================================
 
 
+cmake -B build -G "MinGW Makefiles"
 cmake --build build
 
 if %ERRORLEVEL% EQU 0 (

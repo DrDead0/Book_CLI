@@ -1,4 +1,4 @@
-#include "shell.hpp"
+#include "../include/shell.hpp"
 
 int main() {
     Shell myShell;
