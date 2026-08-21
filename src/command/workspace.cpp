@@ -48,7 +48,7 @@ void WorkspaceCommand::execute(const vector<string> &args) {
         fs::remove_all(workspaceName);
         cout << "Success: Removed Workspace '" << workspaceName << "\n";
       } else {
-        cout << "Error : Workspace'" << workspaceName << "does not exist.\n";
+        cout << "Error : Workspace'" << workspaceName << "does not exist.\n ";
       }
     }
   } else {
