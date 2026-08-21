@@ -27,7 +27,15 @@ void WorkspaceCommand::execute(const vector<string>& args) {
                 }
             }
         }
-    } 
+    } else if(args[1] == "list"){
+        cout<<"Workspace in current directory:\n"
+        string currDir = fs:current_path().string();
+        for (const auto& entry : fs::directory_iterator(currDir)){
+            if(entry.directory()){
+                cout<<" - " << entry.path().filename().string()<<"\n"
+            }
+        }
+    }
     else {
         cout << "Error: Unknown workspace subcommand '" << args[1] << "'\n";
     }
