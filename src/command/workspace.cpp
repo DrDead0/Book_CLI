@@ -48,10 +48,24 @@ void WorkspaceCommand::execute(const vector<string> &args) {
         fs::remove_all(workspaceName);
         cout << "Success: Removed Workspace '" << workspaceName << "\n";
       } else {
-        cout << "Error : Workspace'" << workspaceName << "does not exist.\n";
+        cout << "Error : Workspace'" << workspaceName << "does not exist.\n ";
+      };
+    };
+  } else if (args[1] == "open"){
+    if (args.size()< 3){
+      cout << "Error: you must provide a workspace name to open. \n";
+    }else{
+      string workspaceName = args[2];
+      if (fs:: exists(workspaceName) && fs::is_directory(workspaceName)){
+        fs:: current_path(workspaceName);
+        cout<<"Success: Opened Workspace '" << workspaceName << "'\n";
+      }
+      else{
+        cout << "Error: Workspace '" << workspaceName << "' does not exist or is not a folder.\n";
       }
     }
-  } else {
+  }
+  else {
     cout << "Error: Unknown workspace subcommand '" << args[1] << "'\n";
   }
 }
