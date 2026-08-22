@@ -4,6 +4,10 @@
 
 **Book CLI is a lightning-fast C++23 developer tool designed to unify your entire workflow. It instantly creates and manages workspaces, indexes your local repositories for fast searching, runs your build/test tasks, and handles Git version control—all from a single, persistent terminal.**
 
+  <div align="center">
+  <img src="assets/BookCLI_Banner.png" alt="Book CLI Banner" width="700"/>
+  <br/>
+</div>
 
 ## Overview
 
@@ -11,10 +15,6 @@ A standard developer workflow is heavily fragmented. Switching between projects 
 
 Book CLI acts as a project-aware master shell that removes this friction entirely. Instead of fighting your environment, you stay in one unified interface. You simply tell Book CLI what you want to do—whether that is jumping to a workspace, building the current project, or committing code—and it natively handles the underlying OS commands, paths, and toolchains for you.
 
-<div align="center">
-  <img src="assets/BookCLI_Banner.png" alt="Book CLI Banner" width="700"/>
-  <br/>
-</div>
 
 ##  Core Features (v0.9 Roadmap)
 
