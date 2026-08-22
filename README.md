@@ -4,7 +4,7 @@
 
 Modern software engineering involves managing dozens of fragmented repositories, environments, and directories scattered across local disks. Book CLI eliminates context-switching fatigue by turning the terminal into an intelligent workspace coordinator—unifying directory orchestration, local project indexing, task running, and version control into a single continuous shell.
 
----
+
 
 ##  Key Highlights
 * **Zero Overhead:** Written in modern C++23 with zero external runtime dependencies.
@@ -12,7 +12,7 @@ Modern software engineering involves managing dozens of fragmented repositories,
 * **Interactive Shell Environment:** Dedicated REPL with tokenized command dispatching.
 * **Modular Namespace Architecture:** Isolated command modules preventing runtime state collisions.
 
----
+
 
 ##  Features (v0.2.0 Alpha)
 
@@ -41,7 +41,7 @@ book> workspace remove backend
 Success: Removed Workspace 'backend'
 ~~~
 
----
+
 
 ##  Engineering Roadmap
 
@@ -73,7 +73,7 @@ Book CLI is evolving through deliberate development phases:
 - [ ] Health checker (`book doctor`) for corrupted indexes, broken symlinks, and orphaned build artifacts.
 - [ ] Storage analysis for oversized generated folders (`node_modules`, `build`, `target`).
 
----
+
 
 ##  Build & Installation
 
@@ -97,13 +97,13 @@ cmake --build build
 ./build/book
 ~~~
 
----
+
 
 ##  Architecture & Contributing
 * For internal design specifications, memory models, and planned subsystem pipelines, read `ARCH.md`.
 * For coding standards, branch conventions, and PR guidelines, read `CONTRIBUTING.md`.
 
----
+
 
 ##  License
 This project is licensed under the MIT License.
