@@ -12,10 +12,9 @@ This document defines the architectural principles, component relationships, dat
 4. **Standard-First Tooling:** Rely on modern C++ standard library utilities (`<filesystem>`, `<string_view>`, `<vector>`) over heavy third-party dependencies.
 
 
-
 ## 2. Directory Layout
 
-```text
+~~~text
 Book_CLI/
 ├── CMakeLists.txt          # Build definition and compiler configuration
 ├── include/                # Public interface definitions (Header files)
@@ -30,3 +29,35 @@ Book_CLI/
 │   │   └── workspace.cpp   # Workspace execution logic
 │   └── (future modules)    # index/, runner/, vcs/
 └── build/                  # Artifacts generated during build
+~~~
+
+
+
+## 3. Current Subsystem Architecture (v0.2.x)
+
+### Components:
+* **REPL Entry (`main.cpp`):** Starts the application lifecycle.
+* **Input Tokenizer (`Shell::parseInput`):** Converts raw string stream input into token vectors delimited by whitespace.
+* **Dispatcher (`Shell::executeCommand`):** Directs the first token (`args[0]`) to the responsible namespace handler, passing the full argument context.
+* **Command Handler (`WorkspaceCommand`):** Inspects `args[1..n]`, validates inputs, checks disk state via `std::filesystem::exists()`, and applies filesystem mutations using the `<filesystem>` standard library.
+
+
+
+## 4. Planned Subsystems & Future Expansion
+
+To support the full vision of Book CLI, the architecture will expand into layered, decoupled engines:
+
+### 4.1 Indexer & Search Engine (`src/index/`)
+* **Multi-threaded Traversal:** Implements non-blocking directory walks across designated roots using thread pools.
+* **In-Memory Search Trie:** Enables sub-millisecond keyword and fuzzy matching for `book search <query>`.
+
+### 4.2 Storage & State Persistence (`src/storage/`)
+* Maintains global configuration files.
+* Serializes workspace states, project index caches, and recently visited projects without locking the terminal thread.
+
+### 4.3 Task Execution Engine (`src/runner/`)
+* Process abstraction wrapping OS process spawning.
+* Project-aware build and test runner routing commands to underlying toolchains.
+
+### 4.4 VCS Wrapper Subsystem (`src/vcs/`)
+* Lightweight Git execution wrapper reading and parsing working directory states, active branch pointers, and commit workflows.
