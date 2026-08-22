@@ -1,109 +1,109 @@
-#  Book CLI
-
-**Book CLI** is a modular, high-performance developer workspace manager and execution engine built with **C++23**.
-
-Modern software engineering involves managing dozens of fragmented repositories, environments, and directories scattered across local disks. Book CLI eliminates context-switching fatigue by turning the terminal into an intelligent workspace coordinator—unifying directory orchestration, local project indexing, task running, and version control into a single continuous shell.
 
 
+# Book CLI
 
-##  Key Highlights
-* **Zero Overhead:** Written in modern C++23 with zero external runtime dependencies.
-* **Native Filesystem Operations:** Direct OS-level directory traversal and manipulation via standard libraries.
-* **Interactive Shell Environment:** Dedicated REPL with tokenized command dispatching.
-* **Modular Namespace Architecture:** Isolated command modules preventing runtime state collisions.
+**Book CLI is a lightning-fast C++23 developer tool designed to unify your entire workflow. It instantly creates and manages workspaces, indexes your local repositories for fast searching, runs your build/test tasks, and handles Git version control—all from a single, persistent terminal.**
 
 
+## Overview
 
-##  Features (v0.2.0 Alpha)
+A standard developer workflow is heavily fragmented. Switching between projects usually means typing out long absolute paths, juggling multiple terminal windows to run servers and manage files, and constantly trying to remember if a specific directory uses `npm`, `cmake`, or `cargo`. Every time you switch contexts, it breaks your focus.
 
-The core workspace engine is currently active:
+Book CLI acts as a project-aware master shell that removes this friction entirely. Instead of fighting your environment, you stay in one unified interface. You simply tell Book CLI what you want to do—whether that is jumping to a workspace, building the current project, or committing code—and it natively handles the underlying OS commands, paths, and toolchains for you.
 
-| Command | Description |
-| :--- | :--- |
-| `workspace create <name>` | Allocates and creates a new workspace directory. |
-| `workspace list` | Scans and outputs all workspace directories at the current path. |
-| `workspace open <name>` | Validates target path and switches active program context (CWD). |
-| `workspace remove <name>` | Safely validates and deletes target workspace directory and contents. |
+<div align="center">
+  <img src="assets/BookCLI_Banner.png" alt="Book CLI Banner" width="700"/>
+  <br/>
+</div>
 
-### Interactive REPL Example
-~~~text
-book> workspace create backend
-Success: Created workspace folder 'backend'
+##  Core Features (v0.9 Roadmap)
 
-book> workspace list
-Workspace in current directory:
- - backend
+###  Workspace Orchestration (Active - v0.2)
+Forget raw file paths. Book CLI lets you define and jump between your development environments instantly.
+* `workspace create <name>` - Scaffolds a new workspace instantly.
+* `workspace open <name>` - Teleports your shell directly to the target project.
+* `workspace list` / `workspace remove` - Safely manages your local directories.
 
-book> workspace open backend
-Success: Opened workspace 'backend'
+###  Global Repository Indexing (Upcoming)
+Never lose a project directory again.
+* **Smart Scanning:** Multi-threaded indexing (`scan --global`) finds every developer project on your machine.
+* **Instant Search:** Sub-millisecond fuzzy search (`search <query>`) lets you jump to any repository instantly.
 
-book> workspace remove backend
-Success: Removed Workspace 'backend'
-~~~
+###  Unified Task Runner (Upcoming)
+Stop memorizing build scripts. Book CLI detects the active project type and abstracts the execution.
+* **Auto-Build:** Run `build` and the CLI automatically triggers the correct toolchain (CMake, Rust, Node).
+* **Test & Run:** Instantly execute `test` or `run` without looking up the specific package scripts.
 
-
-
-##  Engineering Roadmap
-
-Book CLI is evolving through deliberate development phases:
-
-###  Phase 1: Advanced Workspaces (Active)
-- [x] Workspace creation, listing, navigation, and deletion.
-- [ ] Atomic workspace renaming (`workspace rename <name> <new-name>`).
-- [ ] Persistent workspace configuration and session restore.
-
-###  Phase 2: Indexing & Fast Search
-- [ ] Multi-threaded disk scanner (`book scan`) across configured root paths.
-- [ ] Project metadata extraction (detection of CMake, Cargo, npm, Go, etc.).
-- [ ] Fast fuzzy search with ranking filters (`book search <query>`).
-- [ ] Quick-access workflow (`book recent`, `book favorite <project>`).
-
-###  Phase 3: Task & Process Runner
-- [ ] Unified project build orchestration (`book build`).
-- [ ] Test suite runner (`book test`).
-- [ ] Task execution pipeline with project-aware configurations (`book run <task>`).
-- [ ] Build artifact cleanup (`book clean`).
-
-###  Phase 4: Version Control Integration
-- [ ] Git repository status inspection (`book status`, `book branch`).
-- [ ] Rapid staged commit shortcuts (`book commit`).
-- [ ] Remote repository sync pipelines (`book push`, `book pull`, `book sync`).
-
-###  Phase 5: System Diagnostics & Health
-- [ ] Health checker (`book doctor`) for corrupted indexes, broken symlinks, and orphaned build artifacts.
-- [ ] Storage analysis for oversized generated folders (`node_modules`, `build`, `target`).
+###  Seamless Version Control (Upcoming)
+Manage your Git workflow directly from the master shell.
+* **Workspace Status:** Get a clean, instant summary of modified files and active branches.
+* **Rapid Commits:** Stage and commit changes with a single `commit` command.
 
 
+##  System Architecture
 
-##  Build & Installation
+<div align="center">
+  <!-- 🖼️ PLACEHOLDER FOR ARCHITECTURE DIAGRAM -->
+  <img src="assets/BookCLI_Arch.png" alt="Book CLI Architecture Diagram" width="800"/>
+</div>
+<br/>
 
-### Prerequisites
-* **Compiler:** Clang 16+, GCC 13+, or MSVC 19.36+ (Full C++23 standard support required).
-* **Build System:** CMake 3.10+
+Book CLI is built for absolute performance, leveraging modern **C++23** to directly manipulate the operating system with zero external runtime dependencies. 
 
-### Compiling from Source
-~~~bash
+**Current Subsystem Design:**
+1. **Interactive REPL:** A persistent shell environment capturing user streams.
+2. **Tokenization Engine:** Safely parses raw strings into whitespace-delimited argument vectors.
+3. **Command Dispatcher:** Routes commands to isolated namespace handlers based on the initial token.
+4. **Native FS Execution:** Command handlers utilize the C++23 `<filesystem>` standard to validate disk states and mutate directories fail-safe, without heavy heap allocations.
+
+*For a deeper dive into the memory model and planned component expansions, read [ARCH.md](ARCH.md).*
+
+
+##  Getting Started
+
+### Option 1: Install via Windows Installer (Recommended)
+You do not need to build from source to use Book CLI. 
+1. Go to the [Releases](#) tab on GitHub.
+2. Download the latest `Book CLI-win64.exe`.
+3. Run the installer. It will automatically add `book` to your system PATH.
+4. Open any command prompt and type `book` to enter the master shell!
+
+### Option 2: Build from Source
+If you wish to compile the project yourself, Book CLI requires a C++23 compatible compiler and CMake.
+
+```bash
 # 1. Clone the repository
-git clone [https://github.com/drdead0/Book_CLI.git](https://github.com/drdead0/Book_CLI.git)
+git clone https://github.com/drdead0/Book_CLI.git
 cd Book_CLI
 
-# 2. Configure build cache
+# 2. Generate build files and compile in Release mode
 cmake -B build
+cmake --build build --config Release
 
-# 3. Compile binary
-cmake --build build
-
-# 4. Launch Book CLI
+# 3. Enter the shell
 ./build/book
-~~~
+```
 
 
 
-##  Architecture & Contributing
-* For internal design specifications, memory models, and planned subsystem pipelines, read `ARCH.md`.
-* For coding standards, branch conventions, and PR guidelines, read `CONTRIBUTING.md`.
+##  Usage Example
+
+Once inside the `book>` prompt, your workflow takes over:
+```text
+book> workspace create backend-api
+Success: Created workspace folder 'backend-api'
+
+book> workspace open backend-api
+Success: Opened workspace 'backend-api'
+
+book> build
+(CMake) Building backend-api... Success.
+```
 
 
+##  Contributing
+
+We are building the ultimate developer shell. If you want to contribute, check our issue-driven Git workflow and C++ coding standards in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ##  License
-This project is licensed under the MIT License.
+This project is open-source and licensed under the **MIT License**.
