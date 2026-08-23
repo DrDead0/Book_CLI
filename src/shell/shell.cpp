@@ -22,11 +22,11 @@ void Shell::executeCommand(const vector<string>& args) {
     string command = args[0];
 
     if (command == "help") {
-        cout << "BOOK v0.1\n";
+        cout << "BOOK v0.2\n";
         cout << "Available commands:\n  workspace, help, version, exit\n";
     } 
     else if (command == "version") {
-        cout << "book-cli version 0.1\n";
+        cout << "book-cli version 0.2\n";
     } 
     else if (command == "workspace") {
         WorkspaceCommand::execute(args);

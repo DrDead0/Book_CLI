@@ -6,6 +6,20 @@
 using namespace std;
 namespace fs = filesystem;
 
+fs::path getStateFilePath() {
+  const char *home = getenv("USERPROFILE");
+  if (!home)
+    home = getenv("HOME");
+  if (!home)
+    return "";
+
+  fs::path configDir = fs::path(home) / ".bookcli";
+  if (fs::exists(configDir)) {
+    fs::create_directory(configDir);
+  }
+  return configDir / ".state.txt";
+}
+
 void WorkspaceCommand::execute(const vector<string> &args) {
   if (args.size() < 2) {
     cout << "Error: workspace requires a subcommand (e.g., 'workspace create "
