@@ -51,7 +51,7 @@ Book CLI is built for absolute performance, leveraging modern **C++23** to direc
 3. **Command Dispatcher:** Routes commands to isolated namespace handlers based on the initial token.
 4. **Native FS Execution:** Command handlers utilize the C++23 `<filesystem>` standard to validate disk states and mutate directories fail-safe, without heavy heap allocations.
 
-*For a deeper dive into the memory model and planned component expansions, read [ARCH.md](ARCH.md).*
+*For a deeper dive into the memory model and planned component expansions, read [ARCHITECTURE.md](ARCHITECTURE.md).*
 
 ## Getting Started
 
