@@ -1,8 +1,11 @@
+
+$ErrorActionPreference = "Stop"
+
 $installDir = "$env:USERPROFILE\.bookcli\bin"
 $exePath = "$installDir\book.exe"
-$repoUrl = "https://github.com/drdead0/Book_CLI/releases/latest/download/book.exe"
+$repoUrl = "https://github.com/DrDead0/Book_CLI/releases/download/v0.2/book.exe"
 
-Write-Host "Installing Book CLI..." -ForegroundColor Cyan
+Write-Host "Installing Book CLI v0.2.0..." -ForegroundColor Cyan
 
 
 if (!(Test-Path $installDir)) {
@@ -10,7 +13,7 @@ if (!(Test-Path $installDir)) {
 }
 
 
-Write-Host "Downloading latest release..."
+Write-Host "Downloading release binary..." -ForegroundColor Cyan
 Invoke-WebRequest -Uri $repoUrl -OutFile $exePath
 
 
@@ -20,4 +23,4 @@ if ($userPath -notmatch [regex]::Escape($installDir)) {
     Write-Host "Added $installDir to your PATH." -ForegroundColor Green
 }
 
-Write-Host "Installation complete. Please restart your terminal and type 'book'." -ForegroundColor Green
+Write-Host "Installation complete! Please restart your terminal and run 'book'." -ForegroundColor Green
