@@ -1,4 +1,4 @@
-#include "../include/shell.hpp"
+#include "../include/core/shell.hpp"
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
@@ -30,7 +30,7 @@ void load_saved_state() {
 int main(){
     load_saved_state();
 
-    Shell myShell;
-    myShell.run();
+    // Shell myShell;
+    // myShell.run();
     return 0 ;
 }
