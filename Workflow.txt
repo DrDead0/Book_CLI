@@ -1,0 +1,13 @@
+User Input ("workspace open api")
+               │
+               ▼
+       [ Shell::run() ]  ── Tokenizes input into: ["workspace", "open", "api"]
+               │
+               ▼
+   [ CommandDispatcher::dispatch() ]  ── Looks up "workspace" in HashMap (O(1))
+               │
+               ▼
+     [ ICommand* Interface ]  ── Calls .execute(["open", "api"])
+               │
+               ▼
+   [ WorkspaceCommand::execute() ]  ── Runs filesystem & state logic
