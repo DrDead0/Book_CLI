@@ -11,5 +11,4 @@ class CommandDispatcher{
     public:
         void registerCommand(const std::string& name,std:: unique_ptr<ICommand> commands);
         void dispatch(const std::string& name,const std::vector<std::string>& args);
-        
 };
