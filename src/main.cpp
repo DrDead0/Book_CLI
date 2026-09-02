@@ -1,36 +1,19 @@
+#include "../include/core/dispatcher.hpp"
 #include "../include/core/shell.hpp"
-#include <cstdlib>
-#include <filesystem>
-#include <fstream>
-#include <string>
+#include "../include/commands/workspace_command.hpp"
+#include <memory>
+#include "../include/commands/system_command.hpp"
 
-using namespace std;
+int main() {
 
-namespace fs = filesystem;
+  CommandDispatcher dispatcher;
 
-void load_saved_state() {
-  const char *home = getenv("USERPROFILE");
-  if (!home)
-    home = getenv("HOME");
-  if (!home)
-    return;
+  dispatcher.registerCommand("workspace", std::make_unique<WorkspaceCommand>());
+  dispatcher.registerCommand("version" , std::make_unique<VersionCommand>());
 
-  fs::path statePath = fs::path(home) / ".bookcli" / ".state.txt";
-  if(fs::exists(statePath)){
-    ifstream stateFile(statePath);
-    string savedPath;
-    if(getline(stateFile,savedPath) && ! savedPath.empty()){
-        if(fs::exists(savedPath) && fs::is_directory(savedPath)){
-            fs::current_path(savedPath);
-        }
-    }
-  }
-}
+  
+  Shell shell(std::move(dispatcher));
+  shell.run();
 
-int main(){
-    load_saved_state();
-
-    // Shell myShell;
-    // myShell.run();
-    return 0 ;
+  return 0;
 }

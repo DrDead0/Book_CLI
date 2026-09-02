@@ -7,8 +7,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_executable(book
     src/main.cpp
-    src/shell/shell.cpp
-    src/command/workspace.cpp
+    src/core/shell.cpp
+    src/core/dispatcher.cpp
+    src/commands/workspace_command.cpp
+    src/commands/system_command.cpp
 )
 
 target_include_directories(book PRIVATE ${CMAKE_SOURCE_DIR}/include)
