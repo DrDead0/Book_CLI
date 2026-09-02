@@ -64,7 +64,40 @@ void WorkspaceCommand::execute(const std::vector<std::string>& args){
             std::cerr<<"Error: A workspace with name '"<<new_name<<"' already exist.\n";
             return;
         }
+        fs::rename(old_name,new_name);
+        std::cout<<"Success: Rename workspace '"<<old_name<<"' to '"<<new_name<<"'.\n";
     
+    }
+    //list logic
+    else if (action == "list") {
+        std::cout<<"Active Workspace in current Director.\n";
+        bool found = false;
+
+        for (const auto& entry :fs::directory_iterator(".")){
+            if(entry.is_directory()){
+                std::cout<<" - "<<entry.path().filename().string()<<"\n";
+                found = true;
+            }
+        }
+        if(!found){
+            std::cout<<"(No workspace found).\n";
+
+        }
+    }
+    //open logic
+    else if (action == "open") {
+        if(args.size()<2){
+            std::cerr<<"Error: 'open' requires a workspace name .\n";
+            return ;
+        }    
+        std::string target = args[1];
+
+        if(!fs::exists(target) || !fs::is_directory(target)){
+            std::cerr<<"Error: Workspace '"<<target<<"' is not a vaild directory.\n";
+            return;
+        }
+        fs::current_path(target);
+        std::cout<<"Success: Internal Context swtiched to workspace '"<<target<<"'.\n";
     }
     //unkown command error 
     else{

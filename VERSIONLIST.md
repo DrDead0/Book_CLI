@@ -1,6 +1,6 @@
 # Book CLI Detailed Development Roadmap
 
-##  Foundation (v0.1 & v0.2) - In Progress
+##  Foundation (v0.1 & v0.2) 
 *Currently migrating legacy codebase to the scalable Command Pattern architecture.*
 - **Code Refactorization:** Moving from monolithic `if-else` blocks to modular `core/` and `commands/` directories.
 - **Add exe Config:** Establishing CMake configuration for automated, cross-platform builds.
