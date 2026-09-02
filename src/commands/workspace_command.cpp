@@ -1,6 +1,7 @@
 #include "../../include/commands/workspace_command.hpp"
+#include "../../include/utils/state_manager.hpp"
 #include<iostream>
-#include<filesystem> // c++ library for OS-level directory manipulation
+#include<filesystem> 
 #include <string>
 #include <vector>
 
@@ -27,6 +28,8 @@ void WorkspaceCommand::execute(const std::vector<std::string>& args){
         }
         if(fs::create_directory(target_path)){
             std::cout<<"Success: Created Workspace folder '"<< target_path<<"'.\n";
+            std::string absolute_path = fs::absolute(args[1]).string();
+            StateManager::saveWorkspace(args[1],absolute_path);
         }else{
             std::cerr<<"Error: OS denied permission to create folder or failed to create '"<<target_path<<"'.\n";
         }
@@ -44,6 +47,7 @@ void WorkspaceCommand::execute(const std::vector<std::string>& args){
         }
 
         fs::remove_all(target_path);
+        StateManager::removeWorkspace(args[1]);
         std::cout<<"Success: Remove workspace '"<<target_path<<"'.\n";
     
     }
@@ -65,39 +69,73 @@ void WorkspaceCommand::execute(const std::vector<std::string>& args){
             return;
         }
         fs::rename(old_name,new_name);
+        StateManager::removeWorkspace(old_name);
+        std::string new_absolute_path = fs::absolute(new_name).string();
+        StateManager::saveWorkspace(new_name,new_absolute_path);
         std::cout<<"Success: Rename workspace '"<<old_name<<"' to '"<<new_name<<"'.\n";
     
     }
     //list logic
     else if (action == "list") {
-        std::cout<<"Active Workspace in current Director.\n";
-        bool found = false;
 
-        for (const auto& entry :fs::directory_iterator(".")){
-            if(entry.is_directory()){
-                std::cout<<" - "<<entry.path().filename().string()<<"\n";
-                found = true;
-            }
+        auto workspaces = StateManager::getWorkspace();
+        if(workspaces.empty()){
+            std::cout<<"Error: No workspace registered globally.\n";
+            return;
         }
-        if(!found){
-            std::cout<<"(No workspace found).\n";
 
+        std::cout<<"Global worksace:\n";
+        for(const auto& [w_name,w_path]:workspaces){
+            std::cout<<" - "<<w_name<<"["<<w_path<<"]";
         }
+        // std::cout<<"Active Workspace in current Director.\n";
+        // bool found = false;
+
+        // for (const auto& entry :fs::directory_iterator(".")){
+        //     if(entry.is_directory()){
+        //         std::cout<<" - "<<entry.path().filename().string()<<"\n";
+        //         found = true;
+        //     }
+        // }
+        // if(!found){
+        //     std::cout<<"(No workspace found).\n";
+
+        // }
     }
     //open logic
     else if (action == "open") {
-        if(args.size()<2){
-            std::cerr<<"Error: 'open' requires a workspace name .\n";
-            return ;
-        }    
-        std::string target = args[1];
 
-        if(!fs::exists(target) || !fs::is_directory(target)){
-            std::cerr<<"Error: Workspace '"<<target<<"' is not a vaild directory.\n";
+        if(args.size()<2){
+            std::cerr<<"Error: 'open' requried a workspace name .\n";
+            return;
+        }
+
+        auto workspaces = StateManager::getWorkspace();
+        if(workspaces.find(args[1]) == workspaces.end()){
+            std::cerr<<"Error:workspace '"<<args[1]<<"'is not registered globally .\n";
+            return;
+        }
+
+        std::string target = workspaces[args[1]];
+
+        if(!fs::exists(target)|| !fs::is_directory(target)){
+            std::cerr<<"Error: Workspace '"<<target<<"' is not a valid directory .\n";
             return;
         }
         fs::current_path(target);
-        std::cout<<"Success: Internal Context swtiched to workspace '"<<target<<"'.\n";
+        std::cout<<"Success: Internal context switched to workspace '"<<args[1]<<"'.\n";
+        // if(args.size()<2){
+        //     std::cerr<<"Error: 'open' requires a workspace name .\n";
+        //     return ;
+        // }    
+        // std::string target = args[1];
+
+        // if(!fs::exists(target) || !fs::is_directory(target)){
+        //     std::cerr<<"Error: Workspace '"<<target<<"' is not a vaild directory.\n";
+        //     return;
+        // }
+        // fs::current_path(target);
+        // std::cout<<"Success: Internal Context swtiched to workspace '"<<target<<"'.\n";
     }
     //unkown command error 
     else{
